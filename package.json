@@ -1,0 +1,28 @@
+{
+  "name": "seconde-hand-market-api",
+  "version": "1.0.0",
+  "description": "중고거래 플랫폼 REST API (Node.js / Express / MariaDB)",
+  "main": "index.js",
+  "dependencies": {
+    "corepack": "^0.34.6",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "mysql2": "^3.20.0",
+    "nodemon": "^3.1.14",
+    "npm": "^10.9.7"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/waniln/seconde-hand-market-api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/waniln/seconde-hand-market-api/issues"
+  },
+  "homepage": "https://github.com/waniln/seconde-hand-market-api#readme"
+}
