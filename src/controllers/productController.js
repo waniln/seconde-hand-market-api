@@ -36,4 +36,49 @@ const getProductById = async (req, res) => {
     }
 };
 
-module.exports = { createProduct, getAllProducts, getProductById};
+const updateProudct = async (req, res) => {
+    try {
+        const { title, description, price, status } = req.body;
+        const productId = req.params.id;
+        const userId = req.user.id;
+
+        const product = await productModel.findProductById(productId);
+        if (!product) {
+            return res.status(404).json({ message: ' 상품을 찾을 수 없습니다.'});
+        }
+
+        if (product.user_id !== userId) {
+            return res.status(403).json({ message: '본인 상품만 수정 할 수 있습니다.' });
+        }
+
+        await productModel.updateProduct(productId, title, description, price, status);
+        res.json({ message: '상품 수정 성공!'});
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: '서버 오류'});
+    }
+};
+
+const deleteProduct = async (req, res) => {
+    try {
+        const productId = req.params.id;
+        const userId = req.user.id;
+
+        const proudct = await productModel.findProductById(productId);
+        if(!proudct) {
+            return res.status(404).json({ message: '상품을 찾을 수 없습니다.'});
+        };
+
+        if (proudct.user_id !== userId) {
+            return res.status(403).json({ message: '본인 상품만 삭제할 수 있습니다.' });
+        }
+
+        await productModel.deleteProduct(productId);
+        res.json({ message: '상품 삭제 성공!'});
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: '서버 오류'});
+    }
+};
+
+module.exports = { createProduct, getAllProducts, getProductById, updateProudct, deleteProduct };

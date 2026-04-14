@@ -22,4 +22,19 @@ const findProductById = async (id) => {
     return rows[0];
 };
 
-module.exports = { createProduct, findAllProducts, findProductById };
+const updateProduct = async (id, title, description, price, status) => {
+    const [result] = await db.query(
+        'UPDATE products SET title = ?, description = ?, price = ?, status = ? , updated_ad = NOW() WHERE id =?',
+        [title, description, price, status, id]
+    );
+    return result;
+};
+
+const deleteProduct = async (id) => {
+    const [result] = await db.query(
+        'DELETE FROM products WHERE id = ?', [id]
+    );
+    return result;
+};
+
+module.exports = { createProduct, findAllProducts, findProductById, updateProduct, deleteProduct };
