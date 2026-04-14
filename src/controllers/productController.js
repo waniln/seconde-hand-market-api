@@ -2,10 +2,10 @@ const productModel = require('../models/productModel');
 
 const createProduct = async (req, res) => {
     try {
-        const { categotyId, title, description, price } = req.body;
+        const { categoryId, title, description, price } = req.body;
         const userId = req.user.id;
 
-        await productModel.createProduct(userId, categorytId, title, description. price);
+        await productModel.createProduct(userId, categoryId, title, description, price);
         res.status(201).json({ message: '상품 등록 성공!'});
     } catch (err) {
         console.error(err);
@@ -26,7 +26,7 @@ const getAllProducts = async (req, res) => {
 const getProductById = async (req, res) => {
     try {
         const productById = await productModel.findProductById(req.params.id);
-        if (!product) {
+        if (!productById) {
             return res.status(404).json({ message: '상품을 찾을 수 없습니다.'});
         }
         res.json(productById);

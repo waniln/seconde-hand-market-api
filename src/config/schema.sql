@@ -34,7 +34,7 @@ CREATE TABLE products (
     created_at DATETIME DEFAULT NOW(),
     updated_ad DATETIME DEFAULT NOW(),
     FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (category_id) REFERENCES categories(id)
+    FOREIGN KEY (category_id) REFERENCES categories
 );
 
 CREATE TABLE wishes (
