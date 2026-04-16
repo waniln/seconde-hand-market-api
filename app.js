@@ -10,9 +10,11 @@ app.use(express.json());
 
 const userRoutes = require('./src/routes/userRoutes');
 const productRoutes = require('./src/routes/productRoutes');
+const wishRoutes = require('./src/routes/wishRoutes');
 
 app.use('/users', userRoutes);
 app.use('/products', productRoutes);
+app.use('/wishes', wishRoutes);
 
 app.get('/', (req, res) => {
     res.json({ message: '중고거래 API 서버 실행 중' });
