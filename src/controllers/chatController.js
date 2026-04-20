@@ -52,6 +52,15 @@ const sendMessage = async (req, res) => {
     const chatId = req.params.chatId;
     const { message } = req.body;
 
+    // 채팅방 참여자 확인
+    const chat = await chatModel.findChatById(chatId);
+    if (!chat) {
+      return res.status(404).json({ message: '채팅방을 찾을 수 없습니다.' });
+    }
+    if (chat.buyer_id !== senderId && chat.seller_id !== senderId) {
+      return res.status(403).json({ message: '채팅방 참여자가 아닙니다.' });
+    }
+
     await chatModel.createMessage(chatId, senderId, message);
     res.status(201).json({ message: '메시지 전송 성공!' });
   } catch (err) {
@@ -63,7 +72,18 @@ const sendMessage = async (req, res) => {
 // 메시지 조회
 const getMessages = async (req, res) => {
   try {
+    const userId = req.user.id;
     const chatId = req.params.chatId;
+
+     // 채팅방 참여자 확인
+    const chat = await chatModel.findChatById(chatId);
+    if (!chat) {
+      return res.status(404).json({ message: '채팅방을 찾을 수 없습니다.' });
+    }
+    if (chat.buyer_id !== userId && chat.seller_id !== userId) {
+      return res.status(403).json({ message: '채팅방 참여자가 아닙니다.' });
+    }
+
     const messages = await chatModel.findMessages(chatId);
     res.json(messages);
   } catch (err) {

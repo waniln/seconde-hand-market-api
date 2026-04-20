@@ -41,4 +41,12 @@ const findMessages = async (chatId) => {
   return rows;
 };
 
-module.exports = { createChat, findChat, findMyChats, createMessage, findMessages };
+const findChatById = async (chatId) => {
+  const [rows] = await db.query(
+    'SELECT * FROM chats WHERE id = ?',
+    [chatId]
+  );
+  return rows[0];
+};
+
+module.exports = { createChat, findChat, findMyChats, createMessage, findMessages , findChatById };
