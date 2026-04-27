@@ -1,10 +1,19 @@
+import { Request, Response } from "express";
+
+interface AuthRequest extends Request {
+  user?: {
+    id: number;
+    email: string;
+  };
+}
+
 const chatModel = require('../models/chatModel');
 const productModel = require('../models/productModel');
 
 // 채팅방 생성 또는 기존 채팅방 반환
-const createChat = async (req, res) => {
+export const createChat = async (req:AuthRequest, res:Response) => {
   try {
-    const buyerId = req.user.id;
+    const buyerId = req.user?.id;
     const productId = req.params.productId;
 
     // 상품 확인
@@ -34,9 +43,9 @@ const createChat = async (req, res) => {
 };
 
 // 내 채팅방 목록
-const getMyChats = async (req, res) => {
+export const getMyChats = async (req:AuthRequest, res:Response) => {
   try {
-    const userId = req.user.id;
+    const userId = req.user?.id;
     const chats = await chatModel.findMyChats(userId);
     res.json(chats);
   } catch (err) {
@@ -46,9 +55,9 @@ const getMyChats = async (req, res) => {
 };
 
 // 메시지 전송
-const sendMessage = async (req, res) => {
+export const sendMessage = async (req:AuthRequest, res:Response) => {
   try {
-    const senderId = req.user.id;
+    const senderId = req.user?.id;
     const chatId = req.params.chatId;
     const { message } = req.body;
 
@@ -70,9 +79,9 @@ const sendMessage = async (req, res) => {
 };
 
 // 메시지 조회
-const getMessages = async (req, res) => {
+export const getMessages = async (req:AuthRequest, res:Response) => {
   try {
-    const userId = req.user.id;
+    const userId = req.user?.id;
     const chatId = req.params.chatId;
 
      // 채팅방 참여자 확인
@@ -91,5 +100,3 @@ const getMessages = async (req, res) => {
     res.status(500).json({ message: '서버 오류' });
   }
 };
-
-module.exports = { createChat, getMyChats, sendMessage, getMessages };

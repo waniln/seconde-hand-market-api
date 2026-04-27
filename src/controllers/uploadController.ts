@@ -1,8 +1,14 @@
+import { Request, Response } from "express";
+
+interface MulterRequrest extends Request {
+    file?: Express.Multer.File;
+}
+
 const { PutObjectCommand } = require('@aws-sdk/client-s3');
 const s3 = require('../config/s3');
 const{ v4: uuidv4 } = require('uuid');
 
-const uploadImage = async (req, res) => {
+export const uploadImage = async (req:MulterRequrest, res:Response) => {
     try {
         if (!req.file) {
             return res.status(400).json({ message: '이미지 파일이 없습니다.' });
@@ -28,5 +34,3 @@ const uploadImage = async (req, res) => {
         res.status(500).json({ message: '서버 오류' });
     } 
 };
-
-module.exports = { uploadImage };

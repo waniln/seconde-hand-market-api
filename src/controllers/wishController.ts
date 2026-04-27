@@ -1,8 +1,17 @@
+import { Request, Response } from "express";
+
+interface AuthRequrest extends Request {
+    user?: {
+        id: number;
+        email: string;
+    };
+}
+
 const wishModel = require('../models/wishModel');
 
-const toggleWish = async (req, res) => {
+export const toggleWish = async (req: AuthRequrest, res: Response) => {
     try {
-        const userId = req.user.id;
+        const userId = req.user?.id;
         const productId = req.params.productId;
 
         const wish = await wishModel.findWish(userId, productId);
@@ -20,9 +29,9 @@ const toggleWish = async (req, res) => {
     }
 };
 
-const getMyWishes = async (req, res) => {
+export const getMyWishes = async (req: AuthRequrest, res: Response) => {
     try {
-        const userId = req.user.id;
+        const userId = req.user?.id;
         const wishes = await wishModel.findAllWishes(userId);
         res.json(wishes);    
     } catch (err) {
@@ -30,5 +39,3 @@ const getMyWishes = async (req, res) => {
         res.status(500).json({ message: '서버 오류'});
     }
 };
-
-module.exports = { toggleWish, getMyWishes };

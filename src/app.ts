@@ -1,5 +1,11 @@
 import express, { Application } from 'express';
 import dotenv from 'dotenv';
+import userRoutes from './routes/userRoutes';
+import productRoutes from './routes/productRoutes';
+import wishRoutes from './routes/wishRoutes';
+import categoryRoutes from './routes/categoryRoutes';
+import chatRoutes from './routes/chatRoutes';
+import uploadRoutes from './routes/uploadRoutes';
 
 dotenv.config();
 
@@ -8,12 +14,6 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 
-import userRoutes from './routes/userRoutes';
-import productRoutes from './routes/productRoutes';
-import wishRoutes from './routes/wishRoutes';
-import categoryRoutes from './routes/categoryRoutes';
-import chatRoutes from './routes/chatRoutes';
-import uploadRoutes from './routes/uploadRoutes';
 
 app.use('/users', userRoutes);
 app.use('/products', productRoutes);

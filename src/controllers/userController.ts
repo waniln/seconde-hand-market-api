@@ -1,8 +1,10 @@
+import { Request, Response } from "express";
+
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const userModel = require('../models/userModel');
 
-const register = async (req, res) => {
+export const register = async (req: Request, res: Response) => {
     try{
         const { email, password, nickname } = req.body;
 
@@ -16,13 +18,13 @@ const register = async (req, res) => {
         await userModel.createUser(email, hashedPassword, nickname);
 
         res.status(201).json({ message: '회원가입 성공!' });
-    } catch {err} {
+    } catch (err) {
         console.error(err);
         res.status(500).json({ message: '서버 오류' });
     }
 };
 
-const login = async (req, res) => {
+export const login = async (req: Request, res: Response) => {
     try {
         const { email, password } = req.body;
     

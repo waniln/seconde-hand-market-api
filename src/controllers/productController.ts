@@ -1,9 +1,18 @@
+import { Request, Response } from "express";
+
+interface AuthRequest extends Request {
+    user?: {
+        id: number;
+        email: string;
+    }
+}
+
 const productModel = require('../models/productModel');
 
-const createProduct = async (req, res) => {
+export const createProduct = async (req: AuthRequest, res: Response) => {
     try {
         const { categoryId, title, description, price } = req.body;
-        const userId = req.user.id;
+        const userId = req.user?.id;
 
         await productModel.createProduct(userId, categoryId, title, description, price);
         res.status(201).json({ message: '상품 등록 성공!'});
@@ -13,7 +22,7 @@ const createProduct = async (req, res) => {
     }
 };
 
-const getAllProducts = async (req, res) => {
+export const getAllProducts = async (req: AuthRequest, res: Response) => {
     try {
         const products = await productModel.findAllProducts();
         res.json(products);
@@ -23,7 +32,7 @@ const getAllProducts = async (req, res) => {
     }
 };
 
-const getProductById = async (req, res) => {
+export const getProductById = async (req: AuthRequest, res: Response) => {
     try {
         const productById = await productModel.findProductById(req.params.id);
         if (!productById) {
@@ -36,11 +45,11 @@ const getProductById = async (req, res) => {
     }
 };
 
-const updateProudct = async (req, res) => {
+export const updateProudct = async (req: AuthRequest, res: Response) => {
     try {
         const { title, description, price, status } = req.body;
         const productId = req.params.id;
-        const userId = req.user.id;
+        const userId = req.user?.id;
 
         const product = await productModel.findProductById(productId);
         if (!product) {
@@ -59,10 +68,10 @@ const updateProudct = async (req, res) => {
     }
 };
 
-const deleteProduct = async (req, res) => {
+export const deleteProduct = async (req: AuthRequest, res: Response) => {
     try {
         const productId = req.params.id;
-        const userId = req.user.id;
+        const userId = req.user?.id;
 
         const proudct = await productModel.findProductById(productId);
         if(!proudct) {
@@ -81,4 +90,3 @@ const deleteProduct = async (req, res) => {
     }
 };
 
-module.exports = { createProduct, getAllProducts, getProductById, updateProudct, deleteProduct };

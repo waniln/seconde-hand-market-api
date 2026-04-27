@@ -1,7 +1,7 @@
 const db = require('../config/db');
 
 // 찜하기
-const createWish = async (userId, productId) => {
+export const createWish = async (userId: number, productId: number) => {
   const [result] = await db.query(
     'INSERT INTO wishes (user_id, products_id) VALUES (?, ?)',
     [userId, productId]
@@ -10,7 +10,7 @@ const createWish = async (userId, productId) => {
 };
 
 // 찜 취소
-const deleteWish = async (userId, productId) => {
+export const deleteWish = async (userId: number, productId: number) => {
   const [result] = await db.query(
     'DELETE FROM wishes WHERE user_id = ? AND products_id = ?',
     [userId, productId]
@@ -19,7 +19,7 @@ const deleteWish = async (userId, productId) => {
 };
 
 // 찜 여부 확인
-const findWish = async (userId, productId) => {
+export const findWish = async (userId: number, productId: number) => {
   const [rows] = await db.query(
     'SELECT * FROM wishes WHERE user_id = ? AND products_id = ?',
     [userId, productId]
@@ -28,12 +28,10 @@ const findWish = async (userId, productId) => {
 };
 
 // 내 찜 목록
-const findAllWishes = async (userId) => {
+export const findAllWishes = async (userId: number) => {
   const [rows] = await db.query(
     'SELECT * FROM wishes WHERE user_id = ?',
     [userId]
   );
   return rows;
 };
-
-module.exports = { createWish, deleteWish, findWish, findAllWishes };

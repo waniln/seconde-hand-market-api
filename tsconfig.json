@@ -10,7 +10,9 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
-    "allowJs": true
+    "allowJs": true,
+    "typeRoots": ["./src/types", "./node_modules/@types"],
+    "types": ["multer"]    
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]

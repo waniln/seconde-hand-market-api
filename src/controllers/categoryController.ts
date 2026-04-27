@@ -1,6 +1,8 @@
+import { Request, Response } from "express";
+
 const categoryModel = require('../models/categoryModel');
 
-const getAllCategories = async (req, res) => {
+export const getAllCategories = async (req: Request, res: Response) => {
   try {
     const categories = await categoryModel.findAllCategories();
     res.json(categories);
@@ -10,7 +12,7 @@ const getAllCategories = async (req, res) => {
   }
 };
 
-const createCategory = async (req, res) => {
+export const createCategory = async (req: Request, res: Response) => {
   try {
     const { name } = req.body;
     await categoryModel.createCategory(name);
@@ -20,5 +22,3 @@ const createCategory = async (req, res) => {
     res.status(500).json({ message: '서버 오류' });
   }
 };
-
-module.exports = { getAllCategories, createCategory };
